@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
-using System.Runtime.InteropServices;
-using System.IO;
 
 namespace SolidWorksMacro
 {
@@ -37,7 +29,7 @@ namespace SolidWorksMacro
             return swApp.OpenDoc6(fileName, (int)swDocumentTypes_e.swDocASSEMBLY, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref fileerror, ref filewarning);
         }
 
-              private void OpenAssemblyButtonClick(object sender, EventArgs e)
+        private void OpenAssemblyButtonClick(object sender, EventArgs e)
         {
             // display an open file dialog where user can select an assembly file  
             OpenFileDialog openAssemblyFileDialog = new OpenFileDialog
@@ -58,7 +50,7 @@ namespace SolidWorksMacro
                 // start solidworks 
                 swApp = new SldWorks
                 {
-                    Visible = true
+                    Visible = this.swVisible.Checked
                 };
 
                 // open assembly file
@@ -89,7 +81,7 @@ namespace SolidWorksMacro
                         // for all sub features get all dimesions
                         while (subFeature != null)
                         {
-                            featureNames.Add("-> SubFeature: " + feature.GetTypeName2());
+                            featureNames.Add("-> SubFeature: " + subFeature.GetTypeName2());
 
                             displayDimension = subFeature.GetFirstDisplayDimension();
 
@@ -108,17 +100,17 @@ namespace SolidWorksMacro
 
                         while (subFeature != null)
                         {
-                            featureNames.Add("-> SubFeature: " + feature.GetTypeName2());
+                            featureNames.Add("-> SubFeature: " + subFeature.GetTypeName2());
 
                             subFeature = subFeature.GetNextSubFeature();
                         }
                     }
                     feature = feature.GetNextFeature();
                 }
-
-                File.WriteAllLines("E:\\Files\\KPI\\macro\\allFeatures.txt", featureNames);
-
-                
+                this.textBox.AppendText("\n====== Start ======\n");
+                this.textBox.AppendText("File path: " + fileName + "\n");
+                this.textBox.AppendText(String.Join("\n", featureNames));
+                this.textBox.AppendText("\n====== End ======\n");
             }
 
             swApp.ExitApp();
