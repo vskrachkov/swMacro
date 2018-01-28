@@ -29,29 +29,29 @@
         private void InitializeComponent()
         {
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button2 = new System.Windows.Forms.Button();
+            this.openAssemblyButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button2
+            // openAssemblyButton
             // 
-            this.button2.Location = new System.Drawing.Point(85, 100);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(109, 37);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Open Assembly";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.OpenAssemblyButtonClick);
+            this.openAssemblyButton.Location = new System.Drawing.Point(108, 175);
+            this.openAssemblyButton.Name = "button2";
+            this.openAssemblyButton.Size = new System.Drawing.Size(75, 23);
+            this.openAssemblyButton.TabIndex = 1;
+            this.openAssemblyButton.Text = "open";
+            this.openAssemblyButton.UseVisualStyleBackColor = true;
+            this.openAssemblyButton.Click += new System.EventHandler(this.OpenAssemblyButtonClick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.openAssemblyButton);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.ResumeLayout(false);
@@ -59,8 +59,9 @@
         }
 
         #endregion
+
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button openAssemblyButton;
     }
 }
 
