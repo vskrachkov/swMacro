@@ -27,23 +27,46 @@ namespace SolidWorksMacro
 
         Guid swGuid = new Guid("CF33D714-2C34-4608-8766-2536E6C41536");
 
-        private void ClickButtonRunMacro(object sender, EventArgs e)
+        private ModelDoc2 OpenDocument(string fileName)
         {
-            // start solidworks 
-            // swApp = (SldWorks) System.Activator.CreateInstance(System.Type.GetTypeFromCLSID(swGuid));
-            swApp = new SldWorks
+            int fileerror = 0;
+            int filewarning = 0;
+            return swApp.OpenDoc6(fileName, (int)swDocumentTypes_e.swDocASSEMBLY, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref fileerror, ref filewarning);
+        }
+
+              private void OpenAssemblyButtonClick(object sender, EventArgs e)
+        {
+            // display an open file dialog where user can select an assembly file  
+            OpenFileDialog openAssemblyFileDialog = new OpenFileDialog
             {
-                Visible = true
+                InitialDirectory = "E:\\Files\\KPI\\macro",
+                Filter = "SolidWorks2014 assembly files|*.sldasm",
+                Title = "Select a Cursor File"
             };
 
-            // creaate new assembly document 
-            swDoc = (ModelDoc2)swApp.NewDocument("C:\\ProgramData\\SolidWorks\\SolidWorks 2014\\templates\\gost-assy.asmdot", 0, 0, 0);
-            swApp.ActivateDoc2("—борка1", false, 0);
-            swAssembly = (AssemblyDoc)swDoc;
+            // show the dialog 
+            // if the user clicked OK in the dialog and  
+            // a file was selected, get name of the file
+            if (openAssemblyFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                // get name of the assembly file
+                string fileName = openAssemblyFileDialog.FileName;
 
-            ModelView myModelView = null;
-            myModelView = (ModelView)swDoc.ActiveView;
-            myModelView.FrameState = (int)swWindowState_e.swWindowMaximized;
+                // start solidworks 
+                swApp = new SldWorks
+                {
+                    Visible = true
+                };
+
+                // open assembly file
+                swDoc = OpenDocument(fileName);
+
+                // activate opened document
+                swApp.ActivateDoc2("sborka", false, 0);
+
+                // get active document
+                swDoc = (ModelDoc2)swApp.ActiveDoc;
+            }
         }
     }
      
